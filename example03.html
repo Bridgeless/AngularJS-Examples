@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="app3" ng-cloak>
+
+<head>
+    <title>Angular JS Tut</title>
+    <style>
+    /*ng-cloak waits until the page is done loading before displaying any of the dynamic/rendered data*/
+    
+    [ng\:cloak],
+    [ng-cloak],
+    .ng-cloak {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div id='groceryList' ng-controller='gListCtrl'>
+        <!-- Using expressions to bind data from js -->
+        <h3 class="ListTitle">{{groceries.length}} Groceries to get.</h3>
+        <!-- Using ng-bind to bind the data from the js -->
+        <h3 class='ListTitle'>
+			<span ng-bind='groceries.length'></span>
+			Groceries to get
+		</h3>
+        <!-- grab a specific item out of the array -->
+        <ol style='margin: 0 0 -15px 0;'>
+            <li>{{groceries[0].item}}</li>
+        </ol>
+        <!-- start determines what number to start the list on -->
+        <!-- ng-repeat is a for each loop -->
+        <!-- ng-if places a condition on the ng-repeat loop -->
+        <ol start='2'>
+            <li ng-repeat='grocery in groceries' ng-if='$index > 0'>
+                {{grocery.item}} {{$index}}
+            </li>
+        </ol>
+        <!-- various methods that can be run on the array -->
+        <ol start='0'>
+            <li ng-repeat='grocery in groceries'>
+                {{grocery.item}} || purchased: {{grocery.purchased}} || {{$index}} || is index even: {{$even}} || is index odd: {{$odd}} || is in the middle: {{$middle}}
+            </li>
+        </ol>
+        <table>
+            <tr ng-repeat-start='grocery in groceries'>
+                <td>
+                    {{grocery.item}}
+                </td>
+                <tr ng-repeat-end>
+                    <td>
+                        {{grocery.purchased}}
+                    </td>
+                </tr>
+        </table>
+        <!-- dynamically interact with the array items -->
+        <label>Change 1st Item : </label>
+        <input ng-model='groceries[0].item' />
+
+
+        <h3>Grocery List</h3>
+        <div ng-include="'olgrocerylist.html'"></div>
+        <label>
+        	<!-- based on the true/false checked/unchecked state of the checkbox the showList function will determine which list to show -->
+            <input type='checkbox' ng-model='showList'>Show Unordered List
+        </label>
+        <!-- allows the import to happen initially based on the default behavior of the getList function -->
+        <ng-include src="getList()"></ng-include>
+
+
+        <!-- switch statment -->
+        <label>Type a number (1 to 4): 
+        	<input type='text' ng-model='someNumber' />
+        </label>
+        <div ng-switch='someNumber'>
+        	<p ng-switch-when='1'>You entered 1</p>
+        	<p ng-switch-when='2'>You entered 2</p>
+        	<p ng-switch-when='3'>You entered 3</p>
+        	<p ng-switch-default='1'>Not following directions</p>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="js/example03.js"></script>
+</body>
+
+</html>
